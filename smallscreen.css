@@ -1,0 +1,94 @@
+body {
+    background-color: darkslategray;
+    color: gainsboro;
+    font-family: monospace, Helvetica;
+}
+
+.title {
+    text-indent: 30px;
+    margin: 2% 5% 2% 5%;
+    color: gainsboro;
+    padding: 1%;
+    border-left: solid 30px cornflowerblue;
+    font-size: 72px;
+}
+
+.content {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    line-height: 32px;
+    padding: 3%;
+    background-color: rgb(36, 36, 54);
+    border: solid 5px gainsboro;
+    font-size: 32px;
+}
+
+.content-input {
+    background-color: rgb(47, 47, 65);
+    font-size: 32px;
+    margin: 15px;
+    color: gainsboro;
+    border-style: none;
+    width: 50%;
+    padding: 3px;
+}
+
+.content-input:focus-visible {
+    outline: none;
+    border-bottom: solid 2px cornflowerblue;   
+}
+
+ul {
+    margin: 5%;
+    justify-items: center;
+    list-style-type: none;
+    display: block;
+    padding: 0;
+}
+
+.messages li {
+    border: solid 5px gainsboro;
+    margin: 0;
+    background-color: rgb(36, 36, 54);
+    margin-bottom: 5%;
+    padding: 2% 2% 0 2%;
+    font-size: 32px;
+}
+
+.messages li p {
+    background-color: rgb(47, 47, 65);
+    padding: 1%;
+    margin: 0;
+}
+
+.footer-wrapper {
+    padding: 2% 5px 5px 5px;
+    font-size: 24px;
+    margin: 0;
+
+}
+
+#footer {
+    display: inline-block;
+    margin: 0;
+    color: gray;
+}
+
+.right-footer {
+    float: right;
+}
+
+#small {
+    font-size: 16px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 4%;
+    background-color: rgb(36, 36, 54);
+    border-top-left-radius: 10px;
+    font-size: 200%;
+}

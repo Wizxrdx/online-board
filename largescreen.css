@@ -1,0 +1,95 @@
+body {
+    background-color: darkslategray;
+    color: gainsboro;
+    font-family: monospace, Helvetica;
+}
+
+.title {
+    text-indent: 30px;
+    margin: 5px 5% 5px 5%;
+    color: gainsboro;
+    padding: 1%;
+    border-left: solid 10px cornflowerblue;
+}
+
+.content {
+    margin: auto;
+    width: 80%;
+    text-align: center;
+    line-height: 24px;
+    padding: 1%;
+    background-color: rgb(36, 36, 54);
+    border: solid 1px gainsboro;
+}
+
+.content-text {
+    padding: 5px;
+}
+
+.content-input {
+    background-color: rgb(47, 47, 65);
+    font-size: 16px;
+    margin: 15px;
+    color: gainsboro;
+    border-style: none;
+    width: 50%;
+    padding: 3px;
+}
+
+.content-input:focus-visible {
+    outline: none;
+    border-bottom: solid 2px cornflowerblue;   
+}
+
+ul {
+    margin: 5%;
+    justify-items: center;
+    list-style-type: none;
+    display: block;
+    padding: 0;
+}
+
+.messages li {
+    border: solid 1px gainsboro;
+    margin: auto;
+    background-color: rgb(36, 36, 54);
+    margin-bottom: 5%;
+    padding: 2% 2% 0 2%;
+
+}
+
+.messages li p {
+    background-color: rgb(47, 47, 65);
+    padding: 1%;
+    margin: 0;
+}
+
+.footer-wrapper {
+    padding: 2% 5px 5px 5px;
+    font-size: 11px;
+    margin: 0;
+
+}
+
+#footer {
+    display: inline-block;
+    margin: 0;
+    color: gray;
+}
+
+.right-footer {
+    float: right;
+}
+
+#small {
+    font-size: 11px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    background-color: rgb(36, 36, 54);
+    border-top-left-radius: 10px;
+}
