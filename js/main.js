@@ -23,7 +23,7 @@ function connectWebSocket() {
     conn.onmessage = handleIncomingMessage
 }
 
-function toggleInput(state) {
+function toggleInput(state = true) {
     if (state) {
         document.getElementById("input-box").removeAttribute("disabled");
     } else {
@@ -51,7 +51,8 @@ function handleKeyDown(event) {
 function submitMessage(message) {
     // Your code to submit the message goes here
     conn.send(message);
-    // TODO: set input timeout
+    toggleInput(false);
+    setTimeout(toggleInput, 5000);
 }
 
 function handleIncomingMessage(event) {
