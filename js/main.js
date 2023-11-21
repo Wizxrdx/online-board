@@ -35,7 +35,7 @@ function handleKeyDown(event) {
     // You can access the input value using document.querySelector('.content-input').value
     var message = document.querySelector('.content-input').value;
     // Filter non-alphanumeric characters using regular expressions
-    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}]/g, '');
+    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}]/, '');
 
     // Trim the filtered message to remove leading and trailing spaces
     filteredMessage = filteredMessage.trim();
