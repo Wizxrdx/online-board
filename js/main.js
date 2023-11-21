@@ -35,7 +35,7 @@ function handleKeyDown(event) {
     // You can access the input value using document.querySelector('.content-input').value
     var message = document.querySelector('.content-input').value;
     // Filter non-alphanumeric characters using regular expressions
-    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}]/, '');
+    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}\s]/g, '');
 
     // Trim the filtered message to remove leading and trailing spaces
     filteredMessage = filteredMessage.trim();
@@ -55,8 +55,8 @@ function submitMessage(message) {
 }
 
 function handleIncomingMessage(event) {
-    console.log(e.data);
-    createMessageElement(e.data, Date.now(), 0);
+    console.log(event.data);
+    createMessageElement(event.data, Date.now(), 0);
     // TODO: properly handle message
 }
 
@@ -113,33 +113,6 @@ function insertNewMessageElement(messageElement) {
     // Append the new <li> element to the <ul> element with class "messages"
     const messagesUl = document.querySelector('.messages');
     messagesUl.appendChild(messageElement);
-}
-
-
-// CRUD operations do not edit
-function getMessagesListElement() {
-    // Call the API endpoint to get the list of messages
-    fetch('/api/messages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({}) // Add any request payload if required
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Process the list of messages
-            const messages = data.messages;
-
-            // Create a new <ul> element to hold the messages
-            const ul = document.createElement('ul');
-
-            // Iterate over the messages and create <li> elements
-            messages.forEach(message => {
-                const li = insertNewMessageElement(message);
-                ul.appendChild(li);
-            });
-        });
 }
 
 connectWebSocket();
