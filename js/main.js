@@ -9,12 +9,12 @@ function connectWebSocket() {
     conn = new WebSocket('ws://'+window.location.host+':8080');
 
     conn.onopen = function() {
-        console.log('WebSocket connection established');
+        // console.log('WebSocket connection established');
         toggleInput(true);
     };
 
     conn.onclose = function(e) {
-        console.log('WebSocket connection disconnected', e.code);
+        // console.log('WebSocket connection disconnected', e.code);
         toggleInput(false);
         // Retry connection after a delay
         setTimeout(connectWebSocket, 2000);
