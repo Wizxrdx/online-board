@@ -1,3 +1,35 @@
+let conn = null; // Declare a variable to store the WebSocket connection
+
+function connectWebSocket() {
+    // Close existing connection if any
+    if (conn !== null) {
+        conn.close();
+    }
+
+    // var conn = new WebSocket('ws://'+window.location.host+':8080');
+    conn = new WebSocket('ws://localhost:8080');
+
+    conn.onopen = function() {
+        console.log('WebSocket connection established');
+        toggleInput(true);
+    };
+
+    conn.onclose = function() {
+        console.log('WebSocket connection closed');
+        toggleInput(false);
+        // Retry connection after a delay
+        setTimeout(connectWebSocket, 2000);
+    };
+
+    conn.onerror = function() {
+        // Retry connection after a delay
+        setTimeout(connectWebSocket, 5000);
+    };
+
+    conn.onmessage = function(e) {
+        console.log('Received message:', event.data);
+    };
+}
 
 function toggleInput(state) {
     if (state) {
@@ -33,7 +65,7 @@ function submitMessage(message) {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-    }) 
+    })
         .then(response => response.json().then(
             data => {
                 // Handle the response from the API if needed
@@ -132,3 +164,5 @@ function getMessagesListElement() {
             });
         });
 }
+
+connectWebSocket();
