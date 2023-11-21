@@ -55,9 +55,21 @@ function submitMessage(message) {
 }
 
 function handleIncomingMessage(event) {
-    console.log(event.data);
-    createMessageElement(event.data, Date.now(), 0);
-    // TODO: properly handle message
+    res = JSON.parse(event.data);
+    // console.log(res.status);
+    switch (res.status) {
+        case 'success':
+        case 'receive':
+            messageElement = createMessageElement(res.message, res.date, res.view);
+            insertNewMessageElement(messageElement);
+            break;
+        case 'timeout':
+        case 'blocked':
+            break;
+        default:
+            console.log('Unknown status:' + res.status);
+            break;
+    }
 }
 
 function createMessageElement(messageContent, timestamp, views) {
