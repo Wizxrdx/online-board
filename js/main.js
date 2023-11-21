@@ -13,14 +13,9 @@ function connectWebSocket() {
         toggleInput(true);
     };
 
-    conn.onclose = function() {
-        console.log('WebSocket connection closed');
+    conn.onerror = function(e) {
+        console.log('WebSocket connection disconnected');
         toggleInput(false);
-        // Retry connection after a delay
-        setTimeout(connectWebSocket, 2000);
-    };
-
-    conn.onerror = function() {
         // Retry connection after a delay
         setTimeout(connectWebSocket, 5000);
     };
