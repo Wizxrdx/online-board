@@ -1,3 +1,12 @@
+
+function toggleInput(state) {
+    if (state) {
+        document.getElementById("input-box").removeAttribute("disabled");
+    } else {
+        document.getElementById("input-box").setAttribute("disabled", "disabled");
+    }
+}
+
 function handleKeyDown(event) {
     // You can access the input value using document.querySelector('.content-input').value
     var message = document.querySelector('.content-input').value;
