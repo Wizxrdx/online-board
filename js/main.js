@@ -6,8 +6,7 @@ function connectWebSocket() {
         conn.close();
     }
 
-    // var conn = new WebSocket('ws://'+window.location.host+':8080');
-    conn = new WebSocket('ws://localhost:8080');
+    conn = new WebSocket('ws://'+window.location.host+':8080');
 
     conn.onopen = function() {
         console.log('WebSocket connection established');
