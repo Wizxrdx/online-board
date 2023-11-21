@@ -124,7 +124,7 @@ function createMessageElement(messageContent, timestamp, views) {
 function insertNewMessageElement(messageElement) {
     // Append the new <li> element to the <ul> element with class "messages"
     const messagesUl = document.querySelector('.messages');
-    messagesUl.appendChild(messageElement);
+    messagesUl.insertBefore(messageElement, messagesUl.firstChild);
 }
 
 connectWebSocket();
