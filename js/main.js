@@ -21,7 +21,7 @@ function connectWebSocket() {
     };
 
     conn.onmessage = function(e) {
-        console.log('Received message:', event.data);
+        console.log('Received message:', e.data);
     };
 }
 
