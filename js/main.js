@@ -52,29 +52,14 @@ function handleKeyDown(event) {
 
 function submitMessage(message) {
     // Your code to submit the message goes here
-    // Make a POST request to the API endpoint
-    fetch('index.php', {
-        method: 'POST',
-        body: 'message='+message,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-    })
-        .then(response => response.json().then(
-            data => {
-                // Handle the response from the API if needed
-                if (data['status'] == 'success') {
-                    li = createMessageElement(data['message'], data['timestamp'], data['views']);
-                    insertNewMessageElement(li);
-                } else if (data['status'] == 'timeout') {
-                    alert('You have sent too many messages in a short period of time. Please try again later.');
-                } else {
-                    console.log('Error:', data);
-                }
-            }))
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    conn.send(message);
+    // TODO: set input timeout
+}
+
+function handleIncomingMessage(event) {
+    console.log(e.data);
+    createMessageElement(e.data, Date.now(), 0);
+    // TODO: properly handle message
 }
 
 function createMessageElement(messageContent, timestamp, views) {
