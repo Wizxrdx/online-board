@@ -13,16 +13,14 @@ function connectWebSocket() {
         toggleInput(true);
     };
 
-    conn.onerror = function(e) {
-        console.log('WebSocket connection disconnected');
+    conn.onclose = function(e) {
+        console.log('WebSocket connection disconnected', e.code);
         toggleInput(false);
         // Retry connection after a delay
-        setTimeout(connectWebSocket, 5000);
+        setTimeout(connectWebSocket, 2000);
     };
 
-    conn.onmessage = function(e) {
-        console.log('Received message:', e.data);
-    };
+    conn.onmessage = handleIncomingMessage
 }
 
 function toggleInput(state) {
