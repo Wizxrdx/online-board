@@ -1,8 +1,41 @@
+let conn = null; // Declare a variable to store the WebSocket connection
+
+function connectWebSocket() {
+    // Close existing connection if any
+    if (conn !== null) {
+        conn.close();
+    }
+
+    conn = new WebSocket('ws://'+window.location.host+':8080');
+
+    conn.onopen = function() {
+        // console.log('WebSocket connection established');
+        toggleInput(true);
+    };
+
+    conn.onclose = function(e) {
+        // console.log('WebSocket connection disconnected', e.code);
+        toggleInput(false);
+        // Retry connection after a delay
+        setTimeout(connectWebSocket, 2000);
+    };
+
+    conn.onmessage = handleIncomingMessage
+}
+
+function toggleInput(state = true) {
+    if (state) {
+        document.getElementById("input-box").removeAttribute("disabled");
+    } else {
+        document.getElementById("input-box").setAttribute("disabled", "disabled");
+    }
+}
+
 function handleKeyDown(event) {
     // You can access the input value using document.querySelector('.content-input').value
     var message = document.querySelector('.content-input').value;
     // Filter non-alphanumeric characters using regular expressions
-    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}]/g, '');
+    var filteredMessage = message.replace(/[^a-zA-Z0-9,./?<>!@#$%^&*():";'{}\s]/g, '');
 
     // Trim the filtered message to remove leading and trailing spaces
     filteredMessage = filteredMessage.trim();
@@ -17,29 +50,27 @@ function handleKeyDown(event) {
 
 function submitMessage(message) {
     // Your code to submit the message goes here
-    // Make a POST request to the API endpoint
-    fetch('index.php', {
-        method: 'POST',
-        body: 'message='+message,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-    }) 
-        .then(response => response.json().then(
-            data => {
-                // Handle the response from the API if needed
-                if (data['status'] == 'success') {
-                    li = createMessageElement(data['message'], data['timestamp'], data['views']);
-                    insertNewMessageElement(li);
-                } else if (data['status'] == 'timeout') {
-                    alert('You have sent too many messages in a short period of time. Please try again later.');
-                } else {
-                    console.log('Error:', data);
-                }
-            }))
-        .catch(error => {
-            console.error('Error:', error);
-        });
+    conn.send(message);
+    toggleInput(false);
+    setTimeout(toggleInput, 5000);
+}
+
+function handleIncomingMessage(event) {
+    res = JSON.parse(event.data);
+    // console.log(res.status);
+    switch (res.status) {
+        case 'success':
+        case 'receive':
+            messageElement = createMessageElement(res.message, res.date, res.view);
+            insertNewMessageElement(messageElement);
+            break;
+        case 'timeout':
+        case 'blocked':
+            break;
+        default:
+            console.log('Unknown status:' + res.status);
+            break;
+    }
 }
 
 function createMessageElement(messageContent, timestamp, views) {
@@ -94,32 +125,7 @@ function createMessageElement(messageContent, timestamp, views) {
 function insertNewMessageElement(messageElement) {
     // Append the new <li> element to the <ul> element with class "messages"
     const messagesUl = document.querySelector('.messages');
-    messagesUl.appendChild(messageElement);
+    messagesUl.insertBefore(messageElement, messagesUl.firstChild);
 }
 
-
-// CRUD operations do not edit
-function getMessagesListElement() {
-    // Call the API endpoint to get the list of messages
-    fetch('/api/messages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({}) // Add any request payload if required
-    })
-        .then(response => response.json())
-        .then(data => {
-            // Process the list of messages
-            const messages = data.messages;
-
-            // Create a new <ul> element to hold the messages
-            const ul = document.createElement('ul');
-
-            // Iterate over the messages and create <li> elements
-            messages.forEach(message => {
-                const li = insertNewMessageElement(message);
-                ul.appendChild(li);
-            });
-        });
-}
+connectWebSocket();
