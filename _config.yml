@@ -1,1 +1,1 @@
-server_hostname: ${{ vars.SERVER_HOSTNAME }}
+server_hostname: ${{ vars.SERVER_HOST }}
