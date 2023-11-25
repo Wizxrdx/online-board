@@ -1,3 +1,4 @@
+const hostname = '{{ site.server_hostname }}';
 let conn = null; // Declare a variable to store the WebSocket connection
 
 function connectWebSocket() {
@@ -6,7 +7,7 @@ function connectWebSocket() {
         conn.close();
     }
 
-    conn = new WebSocket('ws://'+window.location.host+':8080');
+    conn = new WebSocket('ws://'+hostname+':8080');
 
     conn.onopen = function() {
         // console.log('WebSocket connection established');
