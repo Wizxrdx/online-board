@@ -1,28 +1,3 @@
-let conn = null; // Declare a variable to store the WebSocket connection
-
-function connectWebSocket() {
-    // Close existing connection if any
-    if (conn !== null) {
-        conn.close();
-    }
-
-    conn = new WebSocket('ws://localhost:8080');
-
-    conn.onopen = function() {
-        // console.log('WebSocket connection established');
-        toggleInput(true);
-    };
-
-    conn.onclose = function(e) {
-        // console.log('WebSocket connection disconnected', e.code);
-        toggleInput(false);
-        // Retry connection after a delay
-        setTimeout(connectWebSocket, 2000);
-    };
-
-    conn.onmessage = handleIncomingMessage
-}
-
 function toggleInput(state = true) {
     if (state) {
         document.getElementById("input-box").removeAttribute("disabled");
@@ -50,27 +25,10 @@ function handleKeyDown(event) {
 
 function submitMessage(message) {
     // Your code to submit the message goes here
-    conn.send(message);
+    messageElement = createMessageElement(res.message, Date.now() / 1000, 1);
+    insertNewMessageElement(messageElement);
     toggleInput(false);
     setTimeout(toggleInput, 5000);
-}
-
-function handleIncomingMessage(event) {
-    res = JSON.parse(event.data);
-    // console.log(res.status);
-    switch (res.status) {
-        case 'success':
-        case 'receive':
-            messageElement = createMessageElement(res.message, res.date, res.view);
-            insertNewMessageElement(messageElement);
-            break;
-        case 'timeout':
-        case 'blocked':
-            break;
-        default:
-            console.log('Unknown status:' + res.status);
-            break;
-    }
 }
 
 function createMessageElement(messageContent, timestamp, views) {
