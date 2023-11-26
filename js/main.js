@@ -85,5 +85,3 @@ function insertNewMessageElement(messageElement) {
     const messagesUl = document.querySelector('.messages');
     messagesUl.insertBefore(messageElement, messagesUl.firstChild);
 }
-
-connectWebSocket();
