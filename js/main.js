@@ -25,7 +25,7 @@ function handleKeyDown(event) {
 
 function submitMessage(message) {
     // Your code to submit the message goes here
-    messageElement = createMessageElement(res.message, Date.now() / 1000, 1);
+    messageElement = createMessageElement(message, Date.now() / 1000, 1);
     insertNewMessageElement(messageElement);
     toggleInput(false);
     setTimeout(toggleInput, 5000);
